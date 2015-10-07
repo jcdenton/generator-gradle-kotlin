@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+<% if (props.ideaPlugin) { %>
+apply plugin: 'idea'
+<% } %>
+apply plugin: 'kotlin'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '<%= props.gradleVersion %>'
+}

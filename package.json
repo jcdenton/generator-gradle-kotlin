@@ -1,0 +1,37 @@
+{
+  "name": "generator-gradle-kotlin",
+  "version": "0.1.0",
+  "description": "Yeoman generator",
+  "license": "MIT",
+  "main": "generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcdenton/generator-gradle-kotlin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jcdenton/generator-gradle-kotlin/issues"
+  },
+  "author": "jcdenton <ivan.bruzgin@gmail.com>",
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register --timeout 20000"
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "gradle",
+    "kotlin",
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "coffee-script": "^1.10.0",
+    "promise": "^7.0.4",
+    "request": "^2.64.0",
+    "yeoman-generator": "^0.19.0",
+    "yosay": "^1.0.2"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}

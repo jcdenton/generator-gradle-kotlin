@@ -1,0 +1,17 @@
+.DS_Store
+.tmp
+
+.gradle
+build
+
+.idea
+*.iml
+*.ipr
+*.iws
+
+.classpath
+.project
+.settings
+
+*.sublime-project
+*.sublime-workspace
