@@ -24,6 +24,10 @@ class GradleKotlinGenerator extends yeoman.generators.Base
     name: 'kotlinVersion',
     message: 'What Kotlin version would you like to use?'
   }, {
+    type: 'confirm',
+    name: 'useReflect',
+    message: 'Do you want to use Kotlin Reflection?'
+  }, {
     type: 'input',
     name: 'projectName',
     message: "What's your project name?"
@@ -38,7 +42,7 @@ class GradleKotlinGenerator extends yeoman.generators.Base
     @log yosay "Welcome to the incredible #{chalk.bgGreen 'Gradle'}+#{chalk.bgBlue 'Kotlin'} generator!"
 
     done = @async()
-    defaultValues = [@_fetchGradleVersion(), @_fetchKotlinVersion(), @appname]
+    defaultValues = [@_fetchGradleVersion(), @_fetchKotlinVersion(), true, @appname]
     Promise.all(defaultValues).then (defaultValues) =>
       @prompts[i].default = defaultValue for defaultValue, i in defaultValues
       done()
