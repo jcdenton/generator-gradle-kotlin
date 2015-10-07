@@ -19,6 +19,9 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+<% if (props.useReflect) { %>
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+<% } %>
 }
 
 task wrapper(type: Wrapper) {
