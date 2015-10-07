@@ -1,4 +1,5 @@
 'use strict'
+_ = require('lodash')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
 yosay = require('yosay')
@@ -15,42 +16,39 @@ class GradleKotlinGenerator extends yeoman.generators.Base
   constructor: (args, options, config) ->
     super(args, options, config)
 
-  prompts: [{
-    type: 'input',
-    name: 'gradleVersion',
-    message: 'What Gradle version would you like to use?'
-  }, {
-    type: 'input',
-    name: 'kotlinVersion',
-    message: 'What Kotlin version would you like to use?'
-  }, {
-    type: 'confirm',
-    name: 'useReflect',
-    message: 'Do you want to use Kotlin Reflection?'
-  }, {
-    type: 'input',
-    name: 'projectName',
-    message: "What's your project name?"
-  }, {
-    type: 'confirm',
-    name: 'ideaPlugin',
-    message: 'Would you like to use IDEA Gradle plugin?',
-    default: true
-  }]
+  prompts:
+    projectName:
+      type: 'input'
+      name: 'projectName'
+      message: "What's your project name?"
+    gradleVersion:
+      type: 'input'
+      name: 'gradleVersion'
+      message: 'What Gradle version would you like to use?'
+    kotlinVersion:
+      type: 'input'
+      name: 'kotlinVersion'
+      message: 'What Kotlin version would you like to use?'
+    useReflect:
+      type: 'confirm'
+      name: 'useReflect'
+      message: 'Do you want to use Kotlin Reflection?'
+      default: true
+    ideaPlugin:
+      type: 'confirm'
+      name: 'ideaPlugin'
+      message: 'Would you like to use IDEA Gradle plugin?'
+      default: true
 
   initializing: ->
     @log yosay "Welcome to the incredible #{chalk.bgGreen 'Gradle'}+#{chalk.bgBlue 'Kotlin'} generator!"
 
     done = @async()
-    defaultValues = [@_fetchGradleVersion(), @_fetchKotlinVersion(), true, @appname]
-    Promise.all(defaultValues).then (defaultValues) =>
-      @prompts[i].default = defaultValue for defaultValue, i in defaultValues
-      done()
-
+    Promise.all([@_fetchGradleVersion(), @_fetchKotlinVersion(), @_getProjectName()]).then -> done()
 
   prompting: ->
     done = @async()
-    @prompt @prompts, (props) =>
+    @prompt _.values(@prompts), (props) =>
       @props = props
       done()
 
@@ -84,6 +82,9 @@ class GradleKotlinGenerator extends yeoman.generators.Base
   _isWindows: ->
     os.platform().toLowerCase().indexOf('win') > -1
 
+  _getProjectName: ->
+    @prompts.projectName.default = @appname
+
   _fetchGradleVersion: =>
     @log chalk.gray '  Detecting installed Gradle version...'
 
@@ -96,6 +97,8 @@ class GradleKotlinGenerator extends yeoman.generators.Base
         @gradleNotInstalled = true
         @log.error chalk.bgRed 'Could not detect Gradle installation. Please check the PATH variable.'
         Promise.resolve(DEFAULT_GRADLE_VERSION)
+      .then (gradleVersion) =>
+        @prompts.gradleVersion.default = gradleVersion
 
   _fetchKotlinVersion: =>
     @log chalk.gray '  Fetching latest Kotlin version from Maven Central...'
@@ -108,5 +111,7 @@ class GradleKotlinGenerator extends yeoman.generators.Base
       .catch =>
         @log.error chalk.bgRed 'Could not fetch latest Kotlin version from Maven Central.'
         Promise.resolve(DEFAULT_KOTLIN_VERSION)
+      .then (kotlinVersion) =>
+        @prompts.kotlinVersion.default = kotlinVersion
 
 module.exports = GradleKotlinGenerator
