@@ -1,7 +1,7 @@
 {
   "name": "generator-gradle-kotlin",
   "version": "0.2.0",
-  "description": "Yeoman generator",
+  "description": "Basic Gradle/Kotlin project setup",
   "license": "MIT",
   "main": "generators/app/index.js",
   "repository": {
