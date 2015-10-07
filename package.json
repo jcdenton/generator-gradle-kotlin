@@ -28,8 +28,8 @@
     "coffee-script": "^1.10.0",
     "promise": "^7.0.4",
     "request": "^2.64.0",
-    "yeoman-generator": "^0.19.0",
-    "yosay": "^1.0.2"
+    "yeoman-generator": "^0.20.3",
+    "yosay": "^1.0.5"
   },
   "devDependencies": {
     "mocha": "*"
