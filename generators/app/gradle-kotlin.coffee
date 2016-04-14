@@ -80,7 +80,7 @@ class GradleKotlinGenerator extends yeoman.generators.Base
         done()
 
   _isWindows: ->
-    os.platform().toLowerCase().indexOf('win') > -1
+    os.platform().toLowerCase().startsWith('win')
 
   _getProjectName: ->
     @prompts.projectName.default = @appname
